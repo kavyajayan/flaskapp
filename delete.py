@@ -1,0 +1,3 @@
+import dbconnect
+
+dbconnect.removerows()

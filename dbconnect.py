@@ -1,5 +1,4 @@
 import sqlite3
-
 DATABASE = 'database.db'
 
 def insert(uname,pwd):
@@ -16,6 +15,14 @@ def fetch():
 	data=cur2.fetchall()
 	con2.close()
 	return data
+
+def removerows():
+	con3 = sqlite3.connect(DATABASE)
+	cur3 = con3.cursor()
+	cur3.execute("Delete from LOGIN")
+	con3.commit()
+	con3.close()
+
 
 
 	
