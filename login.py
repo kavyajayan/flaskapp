@@ -9,9 +9,13 @@ def login():
 		datas= dbconnect.fetch()
 		for row in datas:
 			if request.form['uname']==row[0]:
-				flag=1		
+				flag=1	
+			else:
+				flag=0
 		if flag==0:
-			redirect('/register')
+			return redirect('/register')
+		else:
+			return "Same username"
 				
 	else:
 			return render_template('login.html')
@@ -20,6 +24,7 @@ def login():
 def register():	
 	if request.method == 'POST':
 		dbconnect.insert(request.form['uname'], request.form['pwd'])
+		return redirect('/')
 	else:
 		return render_template('register.html')
 
