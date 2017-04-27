@@ -8,15 +8,14 @@ def login():
 	flag=0
 	flag2=0
 	if request.method == 'POST':
-		hash = pbkdf2_sha256.encrypt(request.form['pwd'], rounds=200000, salt_size=16)
 		datas= dbconnect.fetch()
 		for row in datas:
 			if request.form['uname']==row[0]:
 				flag=1
-				if hash!=row[1]:
-					flag2==1
+				if pbkdf2_sha256.verify(request.form['pwd'],row[1]):
+					flag2=1
 				else:
-					flag2==0	
+					flag2=0	
 				break
 
 			else:
@@ -24,8 +23,8 @@ def login():
 		if flag==0:
 			return redirect('/register')
 		else:
-			if flag2==1:
-				return render_template('login.html', msg="Invalid password" )
+			if flag2==0:
+				return render_template('login.html', msg="Invalid password")
 			else:
 				return ("Successfully logged in!")		
 	else:
