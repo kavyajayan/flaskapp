@@ -1,0 +1,30 @@
+format_version: 10
+pipelines:
+  Flask-app:
+    group: My-Pipelines
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-0db4521:
+        git: https://github.com/kavyajayan/flaskapp
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - test:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - Test
+                command: echo
+                run_if: passed
